@@ -69,18 +69,44 @@ function BollywoodMovies(){
     const[searchTerm,setSearchTerm] = useState('');
     const[sortBy, setSortBy] = useState('title');
 
+    const getRatingCategory=(rating) => {
+        if(rating >= 9.0) return 'blockbuster';
+        if(rating >= 8.5) return 'superhit';
+        if(rating>=7.5) return 'hit';
+        return 'average';
+    }
     //{ condition && <Component/>}
+    //condition ? valueIfTrue : valueIfFalse
     return (
         <div className="bollywood-movies">
             <h1>Bollywood Hits</h1>
-            {loading && (
+            {loading ? (
                 <div className="loading-spinner">
                     <p>Loading Bollywood Movies ...</p>
                 </div>
+            ):(
+                <div className="main-content">
+                    <div className="movies-grid">
+                        {movies.map((movie)=> (
+                            <div className={`movie-card ${getRatingCategory(movie.rating)}`} key={movie.id}>
+                                <img src={movie.image}
+                                alt={`{movie.title} poster`}
+                                className="movie-image" />
+                                <h3 className="movie-title">{movie.title}</h3>
+                                <p className="movie-year">{movie.year}</p>
+                                <p className="movie-genre">{movie.genre}</p>
+                                <p className="movie-director">{movie.director}</p>
+                                <p className="movie-cast">Cast : {movie.cast.join(', ')}</p>
+                                <div className={`movie-rating ${getRatingCategory(movie.rating)}`}>{movie.rating}/10</div>        
+                            </div>
+                        ))}
+                        </div>
+                </div>
             )}
-            <button onClick={()=> setLoading(!loading)}>
+            {/* <button onClick={()=> setLoading(!loading)}>
                 {loading ? 'Stop Loading' : 'Start Loading'}
-            </button>
+            </button> */}
+
         </div>
     );
 }
