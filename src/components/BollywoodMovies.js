@@ -93,7 +93,19 @@ function BollywoodMovies(){
 
         return matchesSearch && matchesGenre;
     });
-
+    const sortedAndFilteredMovies = filteredMovies.sort((a,b)=> {
+        switch(sortBy){
+            case 'rating':
+                return b.rating - a.rating;
+            case 'year':
+                return b.year - a.year;
+            case 'genre':
+                return a.genre.localeCompare(b.genre);
+            case 'title':
+            default:
+                return a.title.localeCompare(b.title);
+        }
+    })
     const genres = ['All', ...new Set(movies.map(movie => movie.genre))];
     //{ condition && <Component/>}
     //condition ? valueIfTrue : valueIfFalse
@@ -133,8 +145,30 @@ function BollywoodMovies(){
                             }
                         </div>
                     </div>
+                    <div className="sort-selection">
+                        <label htmlFor='sort-select'>sortBy:</label>  
+                        <select
+                            id='sort-select'
+                            value={sortBy}
+                            onChange={(e)=> setSortBy(e.target.value)}>
+                                <option value="title">Title (A-Z)</option>
+                                <option value="rating">Rating (High-Low)</option>
+                                <option value="year">Year (Newest first)</option>
+                                <option value="genre">Genre (A-Z)</option>
+                            </select>        
+                    </div>
+                    {
+                        (searchTerm || selectedGenre !=='All') && (
+                            <button
+                                className="clear-filters"
+                                onClick={()=> {setSearchTerm('');
+                                    setSelectedGenre('All');
+                                }}>Clear All Filters</button>
+                        )
+                    }
                     <div className="movies-grid">
-                        {filteredMovies.map((movie)=> (
+                        {sortedAndFilteredMovies.length > 0 ? 
+                        (sortedAndFilteredMovies.map((movie)=> (
                             <div className={`movie-card ${getRatingCategory(movie.rating)}`} key={movie.id}>
                                 <img src={movie.image}
                                 alt={`{movie.title} poster`}
@@ -146,7 +180,16 @@ function BollywoodMovies(){
                                 <p className="movie-cast">Cast : {movie.cast.join(', ')}</p>
                                 <div className={`movie-rating rating-${getRatingCategory(movie.rating)}`}>{movie.rating}/10</div>        
                             </div>
-                        ))}
+                        ))) : (
+                            <div className="empty-state">
+                                <h3>No bollywood movie found !</h3>
+                                <p>
+                                    {searchTerm || selectedGenre !== 'All' ?
+                                    "try adjusting your search or filter criteria":
+                                    "start searching to find amazing bollywood movies!"}
+                                </p>
+                            </div>
+                        )}
                         </div>
                 </div>
             )}
