@@ -79,16 +79,22 @@ function BollywoodMovies(){
         if(rating >= 8.5) return 'superhit';
         if(rating>=7.5) return 'hit';
         return 'average';
-    }
+    };
 
     const filteredMovies = movies.filter(movie => {
         const searchLower = searchTerm.toLowerCase();
-        return movie.title.toLowerCase().includes(searchLower) || 
+        const matchesSearch = movie.title.toLowerCase().includes(searchLower) || 
         movie.genre.toLowerCase().includes(searchLower)||
         movie.director.toLowerCase().includes(searchLower)||
         movie.year.toString().includes(searchTerm)||
         movie.cast.some(actor => actor.toLowerCase().includes(searchLower))
-    })
+
+        const matchesGenre = selectedGenre === 'All' || movie.genre === selectedGenre;
+
+        return matchesSearch && matchesGenre;
+    });
+
+    const genres = ['All', ...new Set(movies.map(movie => movie.genre))];
     //{ condition && <Component/>}
     //condition ? valueIfTrue : valueIfFalse
     return (
@@ -112,6 +118,21 @@ function BollywoodMovies(){
                             Founded {filteredMovies.length} movie{filteredMovies.length!==1?'s':''} for "{searchTerm}"
                         </p>
                     )}
+                    <div className='filter-section'>
+                        <h4>Filter by Genre:</h4>
+                        <div className="genre-buttons">
+                            {
+                                genres.map(genre => (
+                                    <button
+                                        key={genre}
+                                        className={`genre-button ${selectedGenre === genre ?'active':'' }`}
+                                        onClick={()=> setSelectedGenre(genre)}>
+                                               {genre} 
+                                        </button>
+                                ))
+                            }
+                        </div>
+                    </div>
                     <div className="movies-grid">
                         {filteredMovies.map((movie)=> (
                             <div className={`movie-card ${getRatingCategory(movie.rating)}`} key={movie.id}>
