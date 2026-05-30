@@ -9,7 +9,7 @@ const bollywoodMovies = [
         genre: "Action",
         year: 2025,
         director: "Bala",
-        image:"",
+        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnRk7TswsZzN8F4__fNP9waBRCp8Jg7RclSX3VGU46K_TsVgcmfn4AMOCAGZDMPlR9i9sfIw&s=10",
         cast: ["Akshay Kumar", "Tiger Shroff"]
     },
     {
@@ -19,6 +19,7 @@ const bollywoodMovies = [
         genre: "Thriller",
         year: 2023,
         director: "Anurag Kashyap",
+        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP7ULS-9bVtW6K5PYCGU4BZrw41oDwFhdR3A&s",
         cast: ["Nawazuddin Siddiqui", "Radhika Apte"]
     },
     {
@@ -28,6 +29,7 @@ const bollywoodMovies = [
         genre: "Sci-Fi",
         year: 2024,
         director: "Christopher Nolan",
+        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2UoHkUEY0597xiQH9OnwCq7E_VNNGlpgxgg&s",
         cast: ["Cillian Murphy", "Florence Pugh"]
     },
     {
@@ -37,6 +39,7 @@ const bollywoodMovies = [
         genre: "Drama",
         year: 2022,
         director: "Zoya Akhtar",
+        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw4qLzj5Qrhvex34wPxYsR-4uKZzu266Yk1A&s",
         cast: ["Alia Bhatt", "Ranveer Singh"]
     },
     {
@@ -46,15 +49,17 @@ const bollywoodMovies = [
         genre: "Adventure",
         year: 2021,
         director: "James Cameron",
+        image:"https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/assets/p16733_p_v8_aj.jpg",
         cast: ["Sam Worthington", "Zoe Saldana"]
     },
     {
         id: 6,
         title: "Chennai Express 2",
-        rating: 7.8,
+        rating: 7.2,
         genre: "Comedy",
         year: 2025,
         director: "ROhit shetty",
+        image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIqABCovQnniAtXffPqtaUPRsvVG9kl9yYHZz-ocLCzA&s",
         cast: ["Shahrukh Khan", "Deepika Padukone"]
     }
 ];
@@ -97,7 +102,7 @@ function BollywoodMovies(){
                                 <p className="movie-genre">{movie.genre}</p>
                                 <p className="movie-director">{movie.director}</p>
                                 <p className="movie-cast">Cast : {movie.cast.join(', ')}</p>
-                                <div className={`movie-rating ${getRatingCategory(movie.rating)}`}>{movie.rating}/10</div>        
+                                <div className={`movie-rating rating-${getRatingCategory(movie.rating)}`}>{movie.rating}/10</div>        
                             </div>
                         ))}
                         </div>
