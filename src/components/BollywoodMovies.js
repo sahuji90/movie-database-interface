@@ -80,6 +80,15 @@ function BollywoodMovies(){
         if(rating>=7.5) return 'hit';
         return 'average';
     }
+
+    const filteredMovies = movies.filter(movie => {
+        const searchLower = searchTerm.toLowerCase();
+        return movie.title.toLowerCase().includes(searchLower) || 
+        movie.genre.toLowerCase().includes(searchLower)||
+        movie.director.toLowerCase().includes(searchLower)||
+        movie.year.toString().includes(searchTerm)||
+        movie.cast.some(actor => actor.toLowerCase().includes(searchLower))
+    })
     //{ condition && <Component/>}
     //condition ? valueIfTrue : valueIfFalse
     return (
@@ -91,8 +100,20 @@ function BollywoodMovies(){
                 </div>
             ):(
                 <div className="main-content">
+                    <div className="search-section">
+                        <input type="text"
+                                placeholder="search bollywood movies"
+                                value={searchTerm}
+                                onChange={(e)=> setSearchTerm(e.target.value)}
+                                className="search-input"/>
+                    </div>
+                    {searchTerm && (
+                        <p className="search-results">
+                            Founded {filteredMovies.length} movie{filteredMovies.length!==1?'s':''} for "{searchTerm}"
+                        </p>
+                    )}
                     <div className="movies-grid">
-                        {movies.map((movie)=> (
+                        {filteredMovies.map((movie)=> (
                             <div className={`movie-card ${getRatingCategory(movie.rating)}`} key={movie.id}>
                                 <img src={movie.image}
                                 alt={`{movie.title} poster`}
