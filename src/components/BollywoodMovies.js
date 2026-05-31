@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useMemo} from "react";
 import './BollywoodMovies.css';
 
 const bollywoodMovies = [
@@ -81,7 +81,7 @@ function BollywoodMovies(){
         return 'average';
     };
 
-    const filteredMovies = movies.filter(movie => {
+    /* const filteredMovies = movies.filter(movie => {
         const searchLower = searchTerm.toLowerCase();
         const matchesSearch = movie.title.toLowerCase().includes(searchLower) || 
         movie.genre.toLowerCase().includes(searchLower)||
@@ -92,8 +92,8 @@ function BollywoodMovies(){
         const matchesGenre = selectedGenre === 'All' || movie.genre === selectedGenre;
 
         return matchesSearch && matchesGenre;
-    });
-    const sortedAndFilteredMovies = filteredMovies.sort((a,b)=> {
+    }); */
+    /* const sortedAndFilteredMovies = filteredMovies.sort((a,b)=> {
         switch(sortBy){
             case 'rating':
                 return b.rating - a.rating;
@@ -105,7 +105,37 @@ function BollywoodMovies(){
             default:
                 return a.title.localeCompare(b.title);
         }
-    })
+    }) */
+    const sortedAndFilteredMovies = useMemo(()=> {
+        //filter movies first
+            const filtered = movies.filter(movie => {
+        const searchLower = searchTerm.toLowerCase();
+        const matchesSearch = movie.title.toLowerCase().includes(searchLower) || 
+        movie.genre.toLowerCase().includes(searchLower)||
+        movie.director.toLowerCase().includes(searchLower)||
+        movie.year.toString().includes(searchTerm)||
+        movie.cast.some(actor => actor.toLowerCase().includes(searchLower))
+
+        const matchesGenre = selectedGenre === 'All' || movie.genre === selectedGenre;
+
+        return matchesSearch && matchesGenre;
+    });
+        //then sort the filtered results
+
+    return    filtered.sort((a,b)=> {
+        switch(sortBy){
+            case 'rating':
+                return b.rating - a.rating;
+            case 'year':
+                return b.year - a.year;
+            case 'genre':
+                return a.genre.localeCompare(b.genre);
+            case 'title':
+            default:
+                return a.title.localeCompare(b.title);
+        }
+    });
+    },[movies,searchTerm,selectedGenre,sortBy]);
     const genres = ['All', ...new Set(movies.map(movie => movie.genre))];
     //{ condition && <Component/>}
     //condition ? valueIfTrue : valueIfFalse
@@ -125,11 +155,11 @@ function BollywoodMovies(){
                                 onChange={(e)=> setSearchTerm(e.target.value)}
                                 className="search-input"/>
                     </div>
-                    {searchTerm && (
+                    {/* {searchTerm && (
                         <p className="search-results">
-                            Founded {filteredMovies.length} movie{filteredMovies.length!==1?'s':''} for "{searchTerm}"
+                            Founded {filtered.length} movie{filtered.length!==1?'s':''} for "{searchTerm}"
                         </p>
-                    )}
+                    )} */}
                     <div className='filter-section'>
                         <h4>Filter by Genre:</h4>
                         <div className="genre-buttons">
@@ -145,7 +175,7 @@ function BollywoodMovies(){
                             }
                         </div>
                     </div>
-                    <div className="sort-selection">
+                    <div className="sort-section">
                         <label htmlFor='sort-select'>sortBy:</label>  
                         <select
                             id='sort-select'

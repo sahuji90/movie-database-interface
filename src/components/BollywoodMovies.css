@@ -143,3 +143,59 @@ body{
     color:#000;
     font-weight: bold;
 }
+.sort-section{
+    margin:1.5rem 0;
+    text-align: center;
+}
+
+.sort-section label{
+    font-size:1 rem;
+    margin-right: 0.5rem;
+    color:#ffcc00;
+    font-weight:500;
+}
+
+.sort-section select{
+    padding:0.5rem 1rem;
+    border-radius: 26px;
+    border:2px solid #ffcc00;
+    background: transparent;
+    color:#ffcc00;
+    font-size: 0.95rem;
+    cursor:pointer;
+    outline:none;
+    transition:background 0.3s ease;
+}
+.sort-section select:hover{
+    background: rgba(255,255,255,0.05);
+}
+.clear-filters{
+    display:block;
+    margin:1rem auto 2rem auto;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 25px;
+    background-color: #ffcc00;
+    color:#000;
+    font-weight: bold;
+    cursor:pointer;
+    transition: all 0.3s ease;
+}
+.clear-filters:hover{
+    background-color: #e6b800;
+}
+.empty-state{
+    text-align:center;
+    margin-top:2rem;
+    color:#ccc;
+}
+.empty-state h3{
+    font-size: 1.6rem;
+    margin-bottom: 0.5rem;
+    color:#ff6666;
+}
+
+.empty-state p{
+    font-size:1rem;
+    color:#aaa;
+}
